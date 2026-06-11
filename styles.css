@@ -1,0 +1,138 @@
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body, html {
+        width: 100%;
+        height: 100%;
+        overflow: hidden; /* Prevents the whole page from scrolling/bouncing while dragging */
+        font-family: 'Courier New', Courier, monospace;
+        background-color: #f4edd2; 
+    }
+
+    /* --- 1. INTRO SCREEN --- */
+    #intro-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #1a1a1a;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+        cursor: pointer;
+        transition: opacity 0.8s ease, visibility 0.8s;
+    }
+
+    #intro-screen.fade-out {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .main-photo {
+        width: 80%; /* Uses percentage so it scales cleanly on small screens */
+        max-width: 300px; /* Prevents it from getting too huge on desktop */
+        height: auto;
+        aspect-ratio: 3 / 4;
+        object-fit: cover;
+        border: 12px solid white;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        transform: rotate(-3deg);
+        transition: transform 0.3s ease;
+    }
+
+    .click-hint {
+        color: white;
+        margin-top: 30px;
+        font-size: 1.3rem;
+        letter-spacing: 2px;
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% { opacity: 0.6; }
+        50% { opacity: 1; }
+        100% { opacity: 0.6; }
+    }
+
+    /* --- 2. THE CANVAS & POLAROIDS --- */
+    #canvas {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .polaroid {
+        position: absolute;
+        background: white;
+        padding: 10px 10px 30px 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        cursor: move;
+        touch-action: none; /* CRITICAL: Stops the phone from trying to scroll the page instead of dragging */
+        user-select: none;
+        
+        /* Desktop Default Dimensions */
+        width: 220px;
+        transform: translate(0px, 0px); 
+    }
+
+    .polaroid img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        pointer-events: none; 
+    }
+
+    .caption {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 0.85rem;
+        color: #333;
+        font-weight: bold;
+    }
+
+    /* --- DESKTOP DEFAULT POSITIONS --- */
+    .p1 { top: 15%; left: 10%; transform: rotate(-5deg); }
+    .p2 { top: 12%; left: 60%; transform: rotate(6deg); }
+    .p3 { top: 55%; left: 20%; transform: rotate(-8deg); }
+    .p4 { top: 50%; left: 65%; transform: rotate(3deg); }
+    .p5 { top: 40%; left: 5%; transform: rotate(4deg); }
+    .p6 { top: 60%; left: 30%; transform: rotate(-4deg); }
+    .p7 { top: 30%; left: 23%; transform: rotate(-7deg); }
+    .p8 { top: 60%; left: 11%; transform: rotate(-1deg); }
+    .p9 { top: 10%; left: 40%; transform: rotate(-9deg); }
+    .p10 { top: 30%; left: 23%; transform: rotate(5deg); }
+    .p11 { top: 25%; left: 33%; transform: rotate(3deg); }
+    .p12 { top: 17%; left: 30%; transform: rotate(-4deg); }
+    
+
+
+
+    /* --- 📱 MOBILE & TABLET MEDIA QUERY --- */
+    @media (max-width: 768px) {
+        .polaroid {
+            width: 150px; /* Shrink the photos slightly so they fit on a mobile screen */
+            padding: 8px 8px 25px 8px;
+        }
+        
+        .polaroid img {
+            height: 130px; /* Adjust image height proportionally */
+        }
+
+        .caption {
+            font-size: 0.75rem;
+            margin-top: 6px;
+        }
+
+        /* Stack them slightly more toward the center so they don't spawn off-screen */
+        .p1 { top: 10%; left: 8%; transform: rotate(-4deg); }
+        .p2 { top: 20%; left: 45%; transform: rotate(5deg); }
+        .p3 { top: 52%; left: 5%; transform: rotate(-6deg); }
+        .p4 { top: 58%; left: 48%; transform: rotate(3deg); }
+    }
